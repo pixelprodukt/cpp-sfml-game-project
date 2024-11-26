@@ -1,27 +1,27 @@
-# Notes
+# Compile, build and run
 
 Rightclick main.cpp and click 'compile active file'.
-Then in build folder
+Then go to the  '/build' folder and type
 ```
+// on windows
 mingw32-make
+
+// on mac os
+make
 ```
 
 then go to '/bin' folder and type
 ```
-main
+./main
 ```
 
-to start the main.exe. This is only for win11, i have to check how this works on mac os.
+to start the main.exe.
 
-# CMake SFML Project Template
+On mac os in the project directory you can run the `./start.command` (only works on my local machine because of hardcoded paths) to compile the main.cpp, build with make and run the main file. To set security rights for the script, type
+```
+chmod +x start.command
+```
 
-This repository template should allow for a fast and hassle-free kick start of your next SFML project using CMake.
-Thanks to [GitHub's nature of templates](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template), you can fork this repository without inheriting its Git history.
-
-The template starts out very basic, but might receive additional features over time:
-
-- Basic CMake script to build your project and link SFML on any operating system
-- Basic [GitHub Actions](https://github.com/features/actions) script for all major platforms
 
 ## How to Use
 
