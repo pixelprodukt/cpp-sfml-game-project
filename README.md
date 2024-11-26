@@ -1,3 +1,18 @@
+# Notes
+
+Rightclick main.cpp and click 'compile active file'.
+Then in build folder
+```
+mingw32-make
+```
+
+then go to '/bin' folder and type
+```
+main
+```
+
+to start the main.exe. This is only for win11, i have to check how this works on mac os.
+
 # CMake SFML Project Template
 
 This repository template should allow for a fast and hassle-free kick start of your next SFML project using CMake.
