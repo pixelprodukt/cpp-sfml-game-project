@@ -17,7 +17,7 @@ then go to '/bin' folder and type
 
 to start the main.exe.
 
-On mac os in the project directory you can run the `./start.command` (only works on my local machine because of hardcoded paths) to compile the main.cpp, build with make and run the main file. To set security rights for the script, type
+On mac os in the project directory you can run the `./start.command`, on windows it's the `./start.bat`. You have to change the compiler path though, because I used hardcoded paths to my project here. The scripts will compile the main.cpp, build with make and run the main file. To set security rights for the script on mac os type
 ```
 chmod +x start.command
 ```
