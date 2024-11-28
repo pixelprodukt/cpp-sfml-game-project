@@ -7,17 +7,16 @@
 int main() {
     auto window = sf::RenderWindow({1920u, 1080u}, "CMake SFML Project");
     window.setFramerateLimit(60);
-
-    // glEnable(GL_TEXTURE_2D); // deprecated on mac
-
-    std::cout << "Hello old world!\n";
-
-    test(5);
-
+    
     sf::Texture texture;
-    if (!texture.loadFromFile("../../assets/player_move_spritesheet.png")) {
+    if (!texture.loadFromFile("../../assets/spritesheets/player_girl.png")) {
         std::cout << "Failed loading texture from image\n";
     }
+
+    sf::Sprite* sprite = new sf::Sprite();
+    sprite->setTexture(texture);
+    sprite->scale(4.0f, 4.0f);
+    sprite->setTextureRect(sf::IntRect(16, 0, 16, 16));
 
     while (window.isOpen()) {
         for (auto event = sf::Event(); window.pollEvent(event);) {
@@ -51,6 +50,8 @@ int main() {
         }
 
         window.clear();
+        window.draw(*sprite);
         window.display();
     }
+    delete sprite;
 }
