@@ -17,8 +17,10 @@ include_directories(include)
 
 add_executable(main 
     src/main.cpp
-    src/test.cpp
-    include/test.hpp
+    src/animation.cpp
+    src/game.cpp
+    include/animation.hpp
+    include/game.hpp
     )
 target_link_libraries(main PRIVATE sfml-graphics)
 target_compile_features(main PRIVATE cxx_std_17)
