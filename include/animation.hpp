@@ -12,11 +12,11 @@ class Animation {
     float timeSinceLastFrameChanged;
 
    public:
-    Animation(std::vector<sf::IntRect> frames) : frames(frames),
+    Animation(const std::vector<sf::IntRect>& frames) : frames(frames),
                                                  speed(0.1f),
                                                  currentFrameIndex(0),
                                                  timeSinceLastFrameChanged(0.0f) {}
-    Animation(std::vector<sf::IntRect> frames, float speed) : frames(frames),
+    Animation(const std::vector<sf::IntRect>& frames, float speed) : frames(frames),
                                                               speed(speed),
                                                               currentFrameIndex(0),
                                                               timeSinceLastFrameChanged(0.0f) {}

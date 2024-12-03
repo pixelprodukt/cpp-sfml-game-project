@@ -13,28 +13,20 @@ int main() {
     }
 
     // walk left front animation
-    sf::IntRect frame1(16, 0, 16, 16);
-    sf::IntRect frame2(32, 0, 16, 16);
-    sf::IntRect frame3(48, 0, 16, 16);
-    sf::IntRect frame4(64, 0, 16, 16);
-
-    std::vector<sf::IntRect> framesOne = {frame1, frame2, frame3, frame4};
-    Animation* walkRightFront = new Animation(framesOne, 0.2f);
+    Animation walkRightFront({{16, 0, 16, 16}, {32, 0, 16, 16}, {48, 0, 16, 16}, {64, 0, 16, 16}}, 0.2f);
 
     // walk right front animation
-    sf::IntRect frame5(16, 16, 16, 16);
-    sf::IntRect frame6(32, 16, 16, 16);
-    sf::IntRect frame7(48, 16, 16, 16);
-    sf::IntRect frame8(64, 16, 16, 16);
-
-    std::vector<sf::IntRect> framesTwo = {frame5, frame6, frame7, frame8};
-    Animation* walkLeftFront = new Animation(framesTwo, 0.2f);
+    Animation walkLeftFront({{16, 16, 16, 16}, {32, 16, 16, 16}, {48, 16, 16, 16}, {64, 16, 16, 16}}, 0.2f);
 
     // sprite
-    sf::Sprite* sprite = new sf::Sprite();
-    sprite->setTexture(texture);
-    sprite->scale(4.0f, 4.0f);
-    sprite->setTextureRect(walkLeftFront->getCurrentFrame());
+    sf::Sprite sprite;
+    sprite.setTexture(texture);
+    sprite.scale(4.0f, 4.0f);
+    sprite.setTextureRect(walkLeftFront.getCurrentFrame());
+
+    sf::RectangleShape rect1(sf::Vector2f(100.0f, 100.0f));
+    rect1.setFillColor(sf::Color::Cyan);
+    rect1.setPosition({100.0f, 100.0f});
 
     sf::Clock clock;
 
@@ -77,22 +69,22 @@ int main() {
 
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
                 std::cout << "Move left.\n";
-                sprite->setTextureRect(walkLeftFront->getCurrentFrame());
+                sprite.setTextureRect(walkLeftFront.getCurrentFrame());
             }
             if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scan::Right)) {
                 std::cout << "Move right.\n";
-                sprite->setTextureRect(walkRightFront->getCurrentFrame());
+                sprite.setTextureRect(walkRightFront.getCurrentFrame());
             }
         }
 
         sf::Time delta = clock.restart();
 
-        walkLeftFront->update(delta.asSeconds());
-        walkRightFront->update(delta.asSeconds());
+        walkLeftFront.update(delta.asSeconds());
+        walkRightFront.update(delta.asSeconds());
 
         window.clear();
-        window.draw(*sprite);
+        window.draw(sprite);
+        window.draw(rect1);
         window.display();
     }
-    delete sprite;
 }
