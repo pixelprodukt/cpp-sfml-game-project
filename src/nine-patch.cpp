@@ -11,46 +11,58 @@ void drawNinePatch(
 ) {
     sf::Vector2u texSize = texture.getSize();
 
+    int tXpW = texSize.x - padding.width;
+    int tYpH = texSize.y - padding.height;
+
     // Define the source rectangles for the 9 regions
-    sf::IntRect corners[4] = {
+    const sf::IntRect corners[4] = {
         {0, 0, padding.left, padding.top},                              // Top-left
-        {texSize.x - padding.width, 0, padding.width, padding.top}, // Top-right
-        {0, texSize.y - padding.height, padding.left, padding.height}, // Bottom-left
-        {texSize.x - padding.width, texSize.y - padding.height, padding.width, padding.height} // Bottom-right
+        {tXpW, 0, padding.width, padding.top}, // Top-right
+        {0, tYpH, padding.left, padding.height}, // Bottom-left
+        {tXpW, tYpH, padding.width, padding.height} // Bottom-right
     };
 
+    int tXpLpW = texSize.x - padding.left - padding.width;
+    int tYpTpH = texSize.y - padding.top - padding.height;
+
     sf::IntRect edges[4] = {
-        {padding.left, 0, texSize.x - padding.left - padding.width, padding.top}, // Top
-        {padding.left, texSize.y - padding.height, texSize.x - padding.left - padding.width, padding.height}, // Bottom
-        {0, padding.top, padding.left, texSize.y - padding.top - padding.height}, // Left
-        {texSize.x - padding.width, padding.top, padding.width, texSize.y - padding.top - padding.height} // Right
+        {padding.left, 0, tXpLpW, padding.top}, // Top
+        {padding.left, tYpH, tXpLpW, padding.height}, // Bottom
+        {0, padding.top, padding.left, tYpTpH}, // Left
+        {tXpW, padding.top, padding.width, tYpTpH} // Right
     };
 
     sf::IntRect center = {
         padding.left, padding.top,
-        texSize.x - padding.left - padding.width,
-        texSize.y - padding.top - padding.height
+        tXpLpW,
+        tYpTpH
     };
+
+    int sXpW = size.x - padding.width;
+    int sYpH = size.y - padding.height;
 
     // Define the target rectangles
-    sf::FloatRect targetCorners[4] = {
+    sf::IntRect targetCorners[4] = {
         {0, 0, padding.left, padding.top},                                       // Top-left
-        {size.x - padding.width, 0, padding.width, padding.top},             // Top-right
-        {0, size.y - padding.height, padding.left, padding.height},          // Bottom-left
-        {size.x - padding.width, size.y - padding.height, padding.width, padding.height} // Bottom-right
+        {sXpW, 0, padding.width, padding.top},             // Top-right
+        {0, sYpH, padding.left, padding.height},          // Bottom-left
+        {sXpW, sYpH, padding.width, padding.height} // Bottom-right
     };
 
-    sf::FloatRect targetEdges[4] = {
-        {padding.left, 0, size.x - padding.left - padding.width, padding.top}, // Top
-        {padding.left, size.y - padding.height, size.x - padding.left - padding.width, padding.height}, // Bottom
-        {0, padding.top, padding.left, size.y - padding.top - padding.height}, // Left
-        {size.x - padding.width, padding.top, padding.width, size.y - padding.top - padding.height} // Right
+    int sXpLpW = size.x - padding.left - padding.width;
+    int sYpTpH = size.y - padding.top - padding.height;
+
+    sf::IntRect targetEdges[4] = {
+        {padding.left, 0, sXpLpW, padding.top}, // Top
+        {padding.left, sYpH, sXpLpW, padding.height}, // Bottom
+        {0, padding.top, padding.left, sYpTpH}, // Left
+        {sXpW, padding.top, padding.width, sYpTpH} // Right
     };
 
-    sf::FloatRect targetCenter = {
+    sf::IntRect targetCenter = {
         padding.left, padding.top,
-        size.x - padding.left - padding.width,
-        size.y - padding.top - padding.height
+        sXpLpW,
+        sYpTpH
     };
 
     // Draw the regions
@@ -60,10 +72,10 @@ void drawNinePatch(
     for (int i = 0; i < 4; ++i) {
         sprite.setTextureRect(corners[i]);
         sprite.setPosition(targetCorners[i].left, targetCorners[i].top);
-        sprite.setScale(
+        /* sprite.setScale(
             targetCorners[i].width / corners[i].width,
             targetCorners[i].height / corners[i].height
-        );
+        ); */
         target.draw(sprite);
     }
 
@@ -71,20 +83,20 @@ void drawNinePatch(
     for (int i = 0; i < 4; ++i) {
         sprite.setTextureRect(edges[i]);
         sprite.setPosition(targetEdges[i].left, targetEdges[i].top);
-        sprite.setScale(
+        /* sprite.setScale(
             targetEdges[i].width / edges[i].width,
             targetEdges[i].height / edges[i].height
-        );
+        ); */
         target.draw(sprite);
     }
 
     // Draw center
     sprite.setTextureRect(center);
     sprite.setPosition(targetCenter.left, targetCenter.top);
-    sprite.setScale(
+    /* sprite.setScale(
         targetCenter.width / center.width,
         targetCenter.height / center.height
-    );
+    ); */
     target.draw(sprite);
 }
 

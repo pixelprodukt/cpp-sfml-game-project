@@ -2,10 +2,20 @@
 #include <iostream>
 
 #include "animation.hpp"
+#include "nine-patch.hpp"
 
 int main() {
-    auto window = sf::RenderWindow({1920u, 1080u}, "CMake SFML Project");
+    const float RES_WIDTH = 320.f;
+    const float RES_HEIGHT = 200.f;
+    const int SCALE_FACTOR = 4;
+    const unsigned int WIN_WIDTH = RES_WIDTH * SCALE_FACTOR;
+    const unsigned int WIN_HEIGHT = RES_HEIGHT * SCALE_FACTOR;
+
+    sf::View gameView(sf::FloatRect(0.f, 0.f, RES_WIDTH, RES_HEIGHT));
+
+    auto window = sf::RenderWindow({WIN_WIDTH, WIN_HEIGHT}, "CMake SFML Project");
     window.setFramerateLimit(60);
+    window.setView(gameView);
 
     sf::Texture texture;
     if (!texture.loadFromFile("../../assets/spritesheets/player_girl.png")) {
@@ -21,12 +31,27 @@ int main() {
     // sprite
     sf::Sprite sprite;
     sprite.setTexture(texture);
-    sprite.scale(4.0f, 4.0f);
+    //sprite.scale(4.0f, 4.0f);
     sprite.setTextureRect(walkLeftFront.getCurrentFrame());
 
     sf::RectangleShape rect1(sf::Vector2f(100.0f, 100.0f));
     rect1.setFillColor(sf::Color::Cyan);
     rect1.setPosition({100.0f, 100.0f});
+
+    // nine patch draw test
+    // spoiler alert: it doesn't work
+    sf::Texture ninePatchTexture;
+    if (!ninePatchTexture.loadFromFile("../../assets/ui/toolbar_icon.png")) {
+        std::cout << "Failed loading texture from image\n";
+    }
+
+    std::cout << "text x size: " << ninePatchTexture.getSize().x << std::endl;
+    std::cout << "text y size: " << ninePatchTexture.getSize().y << std::endl;
+
+    sf::IntRect padding(4, 4, 4, 4);
+    sf::Vector2f size(32, 32);
+
+    sf::Sprite nineSprite(ninePatchTexture);
 
     sf::Clock clock;
 
@@ -83,8 +108,10 @@ int main() {
         walkRightFront.update(delta.asSeconds());
 
         window.clear();
-        window.draw(sprite);
-        window.draw(rect1);
+        drawNinePatch(window, ninePatchTexture, padding, size);
+        //window.draw(sprite);
+        //window.draw(nineSprite);
+        //window.draw(rect1);
         window.display();
     }
 }
