@@ -19,8 +19,10 @@ add_executable(main
     src/main.cpp
     src/animation.cpp
     src/game.cpp
+    src/nine-patch.cpp
     include/animation.hpp
     include/game.hpp
+    include/nine-patch.hpp
     )
 target_link_libraries(main PRIVATE sfml-graphics)
 target_compile_features(main PRIVATE cxx_std_17)
