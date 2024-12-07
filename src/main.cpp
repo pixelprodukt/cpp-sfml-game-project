@@ -48,10 +48,8 @@ int main() {
     std::cout << "text x size: " << ninePatchTexture.getSize().x << std::endl;
     std::cout << "text y size: " << ninePatchTexture.getSize().y << std::endl;
 
-    sf::IntRect padding(4, 4, 4, 4);
-    sf::Vector2f size(32, 32);
+    NinePatch ninePatch(8, {150, 60}, ninePatchTexture);
 
-    sf::Sprite nineSprite(ninePatchTexture);
 
     sf::Clock clock;
 
@@ -104,13 +102,12 @@ int main() {
 
         sf::Time delta = clock.restart();
 
-        walkLeftFront.update(delta.asSeconds());
-        walkRightFront.update(delta.asSeconds());
+        /* walkLeftFront.update(delta.asSeconds());
+        walkRightFront.update(delta.asSeconds()); */
 
         window.clear();
-        drawNinePatch(window, ninePatchTexture, padding, size);
         //window.draw(sprite);
-        //window.draw(nineSprite);
+        ninePatch.draw(window);
         //window.draw(rect1);
         window.display();
     }
