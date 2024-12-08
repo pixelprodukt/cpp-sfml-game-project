@@ -31,7 +31,7 @@ int main() {
     // sprite
     sf::Sprite sprite;
     sprite.setTexture(texture);
-    //sprite.scale(4.0f, 4.0f);
+    // sprite.scale(4.0f, 4.0f);
     sprite.setTextureRect(walkLeftFront.getCurrentFrame());
 
     sf::RectangleShape rect1(sf::Vector2f(100.0f, 100.0f));
@@ -45,11 +45,7 @@ int main() {
         std::cout << "Failed loading texture from image\n";
     }
 
-    std::cout << "text x size: " << ninePatchTexture.getSize().x << std::endl;
-    std::cout << "text y size: " << ninePatchTexture.getSize().y << std::endl;
-
-    NinePatch ninePatch(8, {150, 60}, ninePatchTexture);
-
+    NinePatch ninePatch(4, {150, 60}, ninePatchTexture);
 
     sf::Clock clock;
 
@@ -106,9 +102,9 @@ int main() {
         walkRightFront.update(delta.asSeconds()); */
 
         window.clear();
-        //window.draw(sprite);
-        ninePatch.draw(window);
-        //window.draw(rect1);
+        // window.draw(sprite);
+        window.draw(ninePatch);
+        // window.draw(rect1);
         window.display();
     }
 }
