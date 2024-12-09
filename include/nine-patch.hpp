@@ -16,7 +16,9 @@ class NinePatch : public sf::Drawable {
     sf::Vector2f m_cornerPositions[4];
     
     std::vector<sf::Vector2f> m_topEdgePositions;
+    std::vector<sf::Vector2f> m_rightEdgePositions;
     std::vector<sf::Vector2f> m_bottomEdgePositions;
+    std::vector<sf::Vector2f> m_leftEdgePositions;
 
     void initNinePatch(const int& padding, const sf::Vector2u& size);
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const override;

@@ -50,12 +50,7 @@ void NinePatch::initNinePatch(const int& padding, const sf::Vector2u& size) {
     int singleTopEdgeRegionWidth = m_edgeRegions[0].width;
 
     int numberOfFullTopEdgePositions = effectiveWidthOfTopEdge / singleTopEdgeRegionWidth;
-    int restTopWidth = std::fmod(effectiveWidthOfTopEdge, singleTopEdgeRegionWidth);
-
-    std::cout << "one " << effectiveWidthOfTopEdge << std::endl;
-    std::cout << "two " << singleTopEdgeRegionWidth << std::endl;
-    std::cout << "bla " << numberOfFullTopEdgePositions << std::endl;
-    std::cout << "rest " << restTopWidth << std::endl;
+    int restTopWidth = effectiveWidthOfTopEdge % singleTopEdgeRegionWidth;
 
     for (int i = 0; i <= numberOfFullTopEdgePositions; i++) {
         float currentXPosition = padding + (i * m_edgeRegions[0].width);
@@ -65,14 +60,24 @@ void NinePatch::initNinePatch(const int& padding, const sf::Vector2u& size) {
     m_edgeRestRegions[0] = {padding, 0, restTopWidth, padding};      // top
 
     // right edge positions
-    // TODO
+    int fullRightEdgeHeight = size.y - (2 * padding);
+    int rightEdgeRegionHeight = m_edgeRegions[1].height;
+    int fullRightEdgePositions = fullRightEdgeHeight / rightEdgeRegionHeight;
+    int restRightHeight = fullRightEdgeHeight % rightEdgeRegionHeight;
+
+    for (int i = 0; i <= fullRightEdgePositions; i++) {
+        float currentYPosition = padding + (i * m_edgeRegions[1].height);
+        m_rightEdgePositions.emplace_back(size.x - padding, currentYPosition);
+    }
+
+    m_edgeRestRegions[1] = {txmp, padding, padding, restRightHeight};      // right
 
     // bottom edge positions
     int effectiveWidthOfBottomEdge = size.x - (2 * padding);
     int singleBottomEdgeRegionWidth = m_edgeRegions[2].width;
 
     int numberOfFullBottomEdgePositions = effectiveWidthOfBottomEdge / singleBottomEdgeRegionWidth;
-    int restBottomWidth = std::fmod(effectiveWidthOfBottomEdge, singleBottomEdgeRegionWidth);
+    int restBottomWidth = effectiveWidthOfBottomEdge % singleBottomEdgeRegionWidth;
 
     for (int i = 0; i <= numberOfFullBottomEdgePositions; i++) {
         float currentXPosition = padding + (i * m_edgeRegions[2].width);
@@ -82,7 +87,22 @@ void NinePatch::initNinePatch(const int& padding, const sf::Vector2u& size) {
     m_edgeRestRegions[2] = {padding, tymp, restBottomWidth, padding};      // bottom
 
     // left edge positions
-    // TODO
+    int fullLeftEdgeHeight = size.y - (2 * padding);
+    int leftEdgeRegionHeight = m_edgeRegions[3].height;
+    int fullLeftEdgePositions = fullLeftEdgeHeight / leftEdgeRegionHeight;
+    int restLeftHeight = fullLeftEdgeHeight % leftEdgeRegionHeight;
+
+    for (int i = 0; i <= fullLeftEdgePositions; i++) {
+        float currentYPosition = padding + (i * m_edgeRegions[3].height);
+        m_leftEdgePositions.emplace_back(0, currentYPosition);
+    }
+
+    m_edgeRestRegions[3] = {0, padding, padding, restRightHeight};      // left
+
+    std::cout << "one " << fullLeftEdgeHeight << std::endl;
+    std::cout << "two " << leftEdgeRegionHeight << std::endl;
+    std::cout << "bla " << fullLeftEdgePositions << std::endl;
+    std::cout << "rest " << restRightHeight << std::endl;
 }
 
 ////////////////////////////////////////////////////////////
@@ -105,6 +125,18 @@ void NinePatch::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         topEdgeSprite.setPosition(m_topEdgePositions[i]);
         target.draw(topEdgeSprite);
     }
+    for (int i = 0; i < m_rightEdgePositions.size(); i++) {
+        sf::Sprite rightEdgeSprite(m_texture);
+
+        if (i == (m_rightEdgePositions.size() - 1)) {
+            // set TextureRect to smaller region
+            rightEdgeSprite.setTextureRect(m_edgeRestRegions[1]);
+        } else {
+            rightEdgeSprite.setTextureRect(m_edgeRegions[1]);
+        }
+        rightEdgeSprite.setPosition(m_rightEdgePositions[i]);
+        target.draw(rightEdgeSprite);
+    }
     for (int i = 0; i < m_bottomEdgePositions.size(); i++) {
         sf::Sprite bottomEdgeSprite(m_texture);
 
@@ -116,5 +148,17 @@ void NinePatch::draw(sf::RenderTarget& target, sf::RenderStates states) const {
         }
         bottomEdgeSprite.setPosition(m_bottomEdgePositions[i]);
         target.draw(bottomEdgeSprite);
+    }
+    for (int i = 0; i < m_leftEdgePositions.size(); i++) {
+        sf::Sprite leftEdgeSprite(m_texture);
+
+        if (i == (m_leftEdgePositions.size() - 1)) {
+            // set TextureRect to smaller region
+            leftEdgeSprite.setTextureRect(m_edgeRestRegions[3]);
+        } else {
+            leftEdgeSprite.setTextureRect(m_edgeRegions[3]);
+        }
+        leftEdgeSprite.setPosition(m_leftEdgePositions[i]);
+        target.draw(leftEdgeSprite);
     }
 }

@@ -45,7 +45,7 @@ int main() {
         std::cout << "Failed loading texture from image\n";
     }
 
-    NinePatch ninePatch(4, {150, 60}, ninePatchTexture);
+    NinePatch ninePatch(4, {150, 62}, ninePatchTexture);
 
     sf::Clock clock;
 
